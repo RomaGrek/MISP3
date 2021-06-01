@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="POPA" default="run" basedir=".">
+    <!-- define names of directories -->
+    <property file="ant.properties"/>
+
+    <!-- JUnit classpath. -->
+    <path id="junit.class.path">
+        <fileset dir="lib" includes="hamcrest-2.2.jar"/>
+        <fileset dir="lib" includes="junit-4.13.2.jar"/>
+        <pathelement location="${classes_general}"/>
+        <pathelement location="${classes_test}"/>
+    </path>
+
+
+    <!-- define all targets -->
+    <target name="compile">
+        <mkdir dir="${classes_general}"/>
+        <mkdir dir="${classes_test}"/>
+        <javac srcdir="${src}" destdir="${classes_general}" includeAntruntime="false"
+               classpath="${table}"/>
+        <javac srcdir="${test}" destdir="${classes_test}"
+               classpath="${classes_general};${junit}; ${table};"
+               includeantruntime="false"/>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="Main" classpath="${classes_general}; ${table};"/>
+    </target>
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+    <target name="build" depends="compile">
+        <jar destfile="${build}/jars/${ant.project.name}.jar" basedir="${classes_general}">
+            <manifest>
+                <attribute name="Main-Class" value="Main"/>
+                <attribute name="Specification-Version" value="1.0"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="test" depends="compile">
+        <property name="junit.path" refid="junit.class.path"/>
+        <junit printsummary="yes" haltonerror="yes" haltonfailure="yes">
+            <classpath refid="junit.class.path"/>
+            <formatter type="xml" usefile="true"/>
+            <test name="bad.TestFirstBad"/>
+            <test name="bad.TestSecondBad"/>
+            <test name="bad.TestThirdBad"/>
+            <test name="bad.TestFourBad"/>
+            <test name="bad.TestFiveBad"/>
+            <test name="good.TestOneGood"/>
+            <test name="good.TestThirdGood"/>
+            <test name="good.TestFourGood"/>
+            <test name="good.TestFiveGood"/>
+        </junit>
+    </target>
+
+    <target name = "env">
+        <mkdir dir="${classes_general}"/>
+        <javac srcdir="${src}"
+               destdir="${classes_general}"
+               includeantruntime="false"
+               source="1.8"
+               target="1.8"
+               fork="yes"
+               compiler="${javac}">
+        </javac>
+    </target>
+
+    <target name="music" depends="build" description="efwef">
+        <echo>Санек лучший</echo>
+        <sound>
+            <success source="${music1}"/>
+            <fail source="${music2}"/>
+        </sound>
+    </target>
+
+<!--    <target name="music" depends="build">-->
+<!--        <exec executable="cmd" dir="C:\Users\Mi Pro\">-->
+<!--            <arg value="/C"/>-->
+<!--            <arg value="fmedia"/>-->
+<!--            <arg value="1.mp3"/>-->
+<!--            <arg value="&#45;&#45;background"/>-->
+<!--        </exec>-->
+<!--    </target>-->
+</project>
