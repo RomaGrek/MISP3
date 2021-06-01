@@ -11,8 +11,10 @@ public class Validate {
                 return "Вы ввели некорректное значение X, для подробной информации вызовите команду  help";
             }else if (!validateY(partWord[2])) {
                 return "Вы ввели некорректное значение Y, для подробной информации вызовите команду  help";
-            }else  {
+            }else if (!validateR(partWord[3])){
                 return "Вы ввели некорректное значение R, для подробной информации вызовите команду  help";
+            }else {
+                return "Вы ввели некорркные параметры команды";
             }
         }
     }
@@ -20,7 +22,7 @@ public class Validate {
     public static boolean validateX(String x) {
         try {
             double xVal = Double.parseDouble(x);
-            return (-3 < xVal) && (xVal < 5);
+            return (-3 <= xVal) && (xVal <= 5);
         }catch (NumberFormatException e) {
             return false;
         }

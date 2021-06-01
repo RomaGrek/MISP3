@@ -10,9 +10,13 @@ public class History implements CommandDo{
     }
     @Override
     public void doing(String x, String y, String r, HistoryPoint historyPoint) {
-        for (Point point:historyPoint.getHistoryList()) {
-            System.out.println("x: " + point.getX() + " y: " + point.getY() + " r: " + point.getR() +
-                    " result: " + point.getResult());
+        if (historyPoint.getHistoryList().isEmpty()) {
+            System.out.println("Выстрелов еще не было :(");
+        }else {
+            for (Point point : historyPoint.getHistoryList()) {
+                System.out.println("x: " + point.getX() + " y: " + point.getY() + " r: " + point.getR() +
+                        " result: " + point.getResult());
+            }
         }
     }
 }

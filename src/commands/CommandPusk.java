@@ -19,11 +19,15 @@ public class CommandPusk {
             return;
         }
         if (partsWords.length == 1) {    // если введено одно слово
-            CommandDo commandDo = commands.get(partsWords[0]);
-            if(commandDo != null) {    // проверка на правильность программы
-                commandDo.doing(null, null, null, historyPoint);
-            } else {
-                System.out.println("Команды не существует");
+            if (partsWords[0].equals("shot")) {
+                System.out.println("Вы не ввели параметры для метода shot");
+            }else {
+                CommandDo commandDo = commands.get(partsWords[0]);
+                if (commandDo != null) {    // проверка на правильность программы
+                    commandDo.doing(null, null, null, historyPoint);
+                } else {
+                    System.out.println("Команды не существует");
+                }
             }
         } else if (partsWords.length == 4) {  // если введено 2 слова
             CommandDo commandDo = commands.get(partsWords[0]);
